@@ -1,29 +1,8 @@
 #include <iostream>
 #include <string>
+#include "Soundex.h"
 using namespace std;
-class Soundex
-{
-    /**
-     * @brief pads string with zeros until 4 digits
-     * @param word - input string
-     * @return - padded string
-     */
-    string zeroPad(const string& word) const
-    {
-        return word + "000";
-    }
-public:
-    /**
-     * @brief Encode strting to SoundEx Algorithm
-     * @param word - input word
-     * @return - encoded word
-     */
-    string encode(const string& word) const
-    {
-        return zeroPad(word);
-    }
 
-};
 
 #include "gmock/gmock.h"
 using ::testing::Eq;
@@ -37,21 +16,13 @@ public:
 TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord)
 {
     //Arrange
-
-    //Act
-    auto encode = soundex.encode("A");
-
-    //Assert
-    ASSERT_THAT(encode, testing::Eq("A000"));
+    //Act //Assert
+    ASSERT_THAT(soundex.encode("A"), testing::Eq("A000"));
 }
 
 TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits)
 {
     //Arrange
-
-    //Act
-    auto encode = soundex.encode("I");
-
-    //Assert
-    ASSERT_THAT(encode, testing::Eq("I000"));
+    //Act //Assert
+    ASSERT_THAT(soundex.encode("I"), testing::Eq("I000"));
 }
