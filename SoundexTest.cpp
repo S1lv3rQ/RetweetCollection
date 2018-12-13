@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
 #include "Soundex.h"
-using namespace std;
-
-
 #include "gmock/gmock.h"
 using ::testing::Eq;
 // Create a class fixture
