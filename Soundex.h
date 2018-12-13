@@ -7,14 +7,20 @@
 #include <iostream>
 #include <string>
 using namespace std;
+/**
+ * Soundex Algorithm Class
+ */
 class Soundex
 {
+private:
     /**
      * @brief pads string with zeros until 4 digits
      * @param word - input string
      * @return - padded string
      */
     string zeroPad(const string& word) const;
+    string head(const string& word) const;
+    string encodeDigits(const string& word) const;
 public:
     /**
      * @brief Encode string to SoundEx Algorithm

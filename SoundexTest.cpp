@@ -21,3 +21,10 @@ TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits)
     //Act //Assert
     ASSERT_THAT(soundex.encode("I"), testing::Eq("I000"));
 }
+
+TEST_F(SoundexEncoding, ReplaceConsonantsWithAppropriateDigits)
+{
+    //Arrange
+    //Act //Assert
+    ASSERT_THAT(soundex.encode("Ab"), testing::Eq("A100"));
+}
