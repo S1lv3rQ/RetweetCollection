@@ -3,11 +3,21 @@
 using namespace std;
 class Soundex
 {
+    /**
+     * @brief pads string with zeros until 4 digits
+     * @param word - input string
+     * @return - padded string
+     */
     string zeroPad(const string& word) const
     {
         return word + "000";
     }
 public:
+    /**
+     * @brief Encode strting to SoundEx Algorithm
+     * @param word - input word
+     * @return - encoded word
+     */
     string encode(const string& word) const
     {
         return zeroPad(word);
