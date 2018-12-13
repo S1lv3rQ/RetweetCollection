@@ -27,10 +27,16 @@ public:
 
 #include "gmock/gmock.h"
 using ::testing::Eq;
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord)
+// Create a class fixture
+class SoundexEncoding : public testing::Test
+{
+public:
+    Soundex soundex;
+};
+
+TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord)
 {
     //Arrange
-    Soundex soundex;
 
     //Act
     auto encode = soundex.encode("A");
@@ -39,10 +45,9 @@ TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord)
     ASSERT_THAT(encode, testing::Eq("A000"));
 }
 
-TEST(SoundexEncoding, PadsWithZerosToEnsureThreeDigits)
+TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits)
 {
     //Arrange
-    Soundex soundex;
 
     //Act
     auto encode = soundex.encode("I");
