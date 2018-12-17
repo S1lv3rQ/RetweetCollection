@@ -25,8 +25,8 @@ private:
     string head(const string& word) const;
     string tail(const string& word) const;
     string encodeDigits(const string& word) const;
-    string encodeDigit(char letter) const;
-    string stripVowelsAndYHW(const string& word) const;
+    bool isComplete(const string& encoding)const;
+    string lastDigit(const string& encoding)const;
 public:
     /**
      * @brief Encode string to SoundEx Algorithm
@@ -34,6 +34,7 @@ public:
      * @return - encoded word
      */
     string encode(const string& word) const;
+    string encodeDigit(char letter) const;
 };
 
 #endif //FIRSTEXAMPLE_SOUNDEX_H
