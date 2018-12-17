@@ -7,6 +7,9 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
+static const size_t MaxCodeLength{4};
+
 /**
  * Soundex Algorithm Class
  */
@@ -20,7 +23,10 @@ private:
      */
     string zeroPad(const string& word) const;
     string head(const string& word) const;
+    string tail(const string& word) const;
     string encodeDigits(const string& word) const;
+    string encodeDigit(char letter) const;
+    string stripVowelsAndYHW(const string& word) const;
 public:
     /**
      * @brief Encode string to SoundEx Algorithm
