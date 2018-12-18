@@ -24,6 +24,7 @@ int RetweetCollection::size() const
 
 void RetweetCollection::add(const Tweet &tweet)
 {
+    tweets.insert(tweet);
     collectionSize++;
     //
 }

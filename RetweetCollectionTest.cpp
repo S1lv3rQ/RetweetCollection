@@ -41,6 +41,18 @@ TEST_F(ARetweetCollection, IsNotEmptyWhenItsSizeIsNonZero)
     ASSERT_FALSE(collection.isEmpty());
 }
 
+TEST_F(ARetweetCollection, IgnoreDuplicateTweetAdded)
+{
+    // Arrange
+    Tweet tweet("msg", "@user");
+    Tweet duplicate(tweet);
+
+    collection.add(tweet);
+    collection.add(duplicate);
+
+    ASSERT_THAT(collection.size(), Eq(1u));
+}
+
 class ARetweetCollectionWithOneTweet : public Test
 {
 public:
@@ -48,7 +60,7 @@ public:
 
     void SetUp() override
     {
-        collection.add(Tweet());
+        collection.add(Tweet("msg", "@user"));
     }
     void TearDown() override
     {

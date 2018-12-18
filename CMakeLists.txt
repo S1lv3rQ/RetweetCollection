@@ -8,7 +8,7 @@ include_directories(googletest/include googlemock/include)
 set(CMAKE_CXX_STANDARD 11)          # C++ V11
 set(CMAKE_CXX_FLAGS "${CMAXE_CXX_FLAGS} -Wall")
 
-set(SRCS main.cpp RetweetCollection.cpp RetweetCollection.h RetweetCollectionTest.cpp Tweet.cpp Tweet.h)
+set(SRCS main.cpp RetweetCollection.cpp RetweetCollection.h RetweetCollectionTest.cpp Tweet.cpp Tweet.h TweetTest.cpp)
 
 add_executable(test ${SRCS})
 target_link_libraries(test pthread gmock gmock_main gtest gtest_main)
