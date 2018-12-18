@@ -24,3 +24,12 @@ bool Tweet::operator<(const Tweet &rhs) const
 const string &Tweet::getUser_() const {
     return user_;
 }
+
+bool Tweet::operator==(const Tweet &rhs) const {
+    return message_ == rhs.message_ &&
+           user_ == rhs.user_;
+}
+
+bool Tweet::operator!=(const Tweet &rhs) const {
+    return !(rhs == *this);
+}
