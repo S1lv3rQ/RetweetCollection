@@ -23,7 +23,14 @@ public:
     bool operator!=(const Tweet &rhs) const;
 
     const string &getUser_() const;
+
+    bool isValid(const string& user);
 };
 
+class InvalidUserException : std::invalid_argument
+{
+public:
+    InvalidUserException(const string& user) : invalid_argument(user){}
+};
 
 #endif //FIRSTEXAMPLE_TWEET_H
