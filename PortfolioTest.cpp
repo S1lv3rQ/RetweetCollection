@@ -4,30 +4,45 @@
 
 using namespace std;
 using namespace ::testing;
+using namespace boost::gregorian;
 
 class APortfolio: public Test {
 public:
+    static const date ArbitraryDate;
     static const string IBM;
     static const string SAMSUNG;
     Portfolio portfolio_;
+
+    void Purchase(const string& symbol, unsigned int shareCount,
+            const date& transactionDate=APortfolio::ArbitraryDate)
+    {
+        portfolio_.Purchase(symbol, shareCount, transactionDate);
+    }
 };
+const date APortfolio::ArbitraryDate(2018, Dec, 1);
+
 const string APortfolio::IBM("IBM");
 const string APortfolio::SAMSUNG("SSNLF");
 
-TEST_F(APortfolio, IsEmptyWhenCreated) {
+TEST_F(APortfolio, IsEmptyWhenCreated)
+{
     ASSERT_TRUE(portfolio_.IsEmpty());
 }
 
-TEST_F(APortfolio, IsNotEmptyAfterPurchase) {
+TEST_F(APortfolio, IsNotEmptyAfterPurchase)
+{
     portfolio_.Purchase(IBM, 1);
 
     ASSERT_FALSE(portfolio_.IsEmpty());
 }
-TEST_F(APortfolio, AnswersZeroForShareCountOfUnpurchasedSymbol) {
+
+TEST_F(APortfolio, AnswersZeroForShareCountOfUnpurchasedSymbol)
+{
     ASSERT_THAT(portfolio_.ShareCount("AAPL"), Eq(0u));
 }
 
-TEST_F(APortfolio, AnswersShareCountForPurchasedSymbol) {
+TEST_F(APortfolio, AnswersShareCountForPurchasedSymbol)
+{
     portfolio_.Purchase(IBM, 2);
     ASSERT_THAT(portfolio_.ShareCount(IBM), Eq(2u));
 }
@@ -53,7 +68,7 @@ TEST_F(APortfolio, ShareCountReflectsAccumulatedPurchaseOfSameSymbol)
 
 TEST_F(APortfolio, ReduceShareCountOfSymbolsOnSell)
 {
-    portfolio_.Purchase(SAMSUNG, 30);
+    Purchase(SAMSUNG, 30);
     portfolio_.Sell(SAMSUNG, 13);
     ASSERT_THAT(portfolio_.ShareCount(SAMSUNG), Eq(30u - 13));
 }
@@ -61,4 +76,16 @@ TEST_F(APortfolio, ReduceShareCountOfSymbolsOnSell)
 TEST_F(APortfolio, ThrowWhenSellingMoreSharesThanPurchased)
 {
     ASSERT_THROW(portfolio_.Sell(SAMSUNG, 1), InvalidSellException);
+}
+
+TEST_F(APortfolio, AnswersThePurchaseRecordsForASinglePurchase)
+{
+    date dateOfPurchase(2018, Dec, 18);
+    Purchase(SAMSUNG, 5, dateOfPurchase);
+
+    auto purchases = portfolio_.Purchases(SAMSUNG);
+    auto purchase = purchases[0];
+
+    ASSERT_THAT(purchase.ShareCount, Eq(5u));
+    ASSERT_THAT(purchase.Date, Eq(dateOfPurchase));
 }
