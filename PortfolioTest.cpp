@@ -1,6 +1,8 @@
-#include "gmock/gmock.h"
+#include <gmock/gmock.h>
 #include "Portfolio.h"
 #include <iostream>
+#include "DateTestConsonants.h"
+#include "PurchaseRecord.h"
 
 using namespace std;
 using namespace ::testing;
@@ -8,19 +10,18 @@ using namespace boost::gregorian;
 
 class APortfolio: public Test {
 public:
-    static const date ArbitraryDate;
     static const string IBM;
     static const string SAMSUNG;
     Portfolio portfolio_;
 
     void Purchase(const string& symbol, unsigned int shareCount,
-            const date& transactionDate=APortfolio::ArbitraryDate)
+            const date& transactionDate=ArbitraryDate)
     {
         portfolio_.Purchase(symbol, shareCount, transactionDate);
     }
 
     void Sell(const string& symbol, unsigned int shareCount,
-          const date& transactionDate=APortfolio::ArbitraryDate)
+          const date& transactionDate=ArbitraryDate)
     {
         portfolio_.Sell(symbol, shareCount, transactionDate);
     }
@@ -31,7 +32,6 @@ public:
         ASSERT_THAT(purchase.Date, Eq(date));
     }
 };
-const date APortfolio::ArbitraryDate(2018, Dec, 1);
 
 const string APortfolio::IBM("IBM");
 const string APortfolio::SAMSUNG("SSNLF");
@@ -105,4 +105,17 @@ TEST_F(APortfolio, IncludeSalesInPurchase)
 
     auto sales = portfolio_.Purchases(SAMSUNG);
     ASSERT_PURCHASE(sales[1], -5, ArbitraryDate);
+}
+
+bool operator==(const PurchaseRecord& lhs, const PurchaseRecord& rhs){
+    return lhs.ShareCount == rhs.ShareCount && lhs.Date == rhs.Date;
+}
+
+TEST_F(APortfolio, SeparatePurchasesRecordsBySymbol)
+{
+    Purchase(SAMSUNG, 5, ArbitraryDate);
+    Purchase(IBM, 1, ArbitraryDate);
+
+    auto sales = portfolio_.Purchases(SAMSUNG);
+    ASSERT_THAT(sales, ElementsAre(PurchaseRecord(5, ArbitraryDate)));
 }
