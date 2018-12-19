@@ -20,7 +20,15 @@ class HttpStub : public Http{
     void initialize() override {}
     std::string get(const std::string& url) const override
     {
-        return "???";
+        return R"(
+        { "address":
+            {
+            "road":"Drury Ln",
+            "city":"Fountain",
+            "state":"CO",
+            "country":"US"
+            }
+         })";
     }
 };
 
@@ -29,6 +37,6 @@ TEST_F(APlaceDescriptionService, ReturnDescriptionForValidLocation){
     PlaceDescriptionService service(&httpStub);
 
     auto description = service.summaryDescription(ValidLatitude, ValidLongitude);
-    ASSERT_THAT(description, Eq("Durry Ln, Fountain, CO, US"));
+    ASSERT_THAT(description, Eq("Drury Ln, Fountain, CO, US"));
 }
 
