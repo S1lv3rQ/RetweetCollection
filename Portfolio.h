@@ -11,7 +11,7 @@
 #include <vector>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 
-class InvalidPurchaseException : public std::exception {};
+class ShareCountCannotBeZeroException : public std::exception {};
 class InvalidSellException : public std::exception {};
 
 struct PurchaseRecord
@@ -19,7 +19,7 @@ struct PurchaseRecord
     PurchaseRecord(unsigned int shareCount, const boost::gregorian::date& date)
             : ShareCount(shareCount), Date(date){}
 
-    unsigned int ShareCount;
+    int ShareCount;
     boost::gregorian::date Date;
 };
 

@@ -61,7 +61,7 @@ TEST_F(APortfolio, AnswersShareCountForPurchasedSymbol)
 
 TEST_F(APortfolio, ThrowOnPurchaseOfZeroShares)
 {
-    ASSERT_THROW(Purchase(IBM, 0), InvalidPurchaseException);
+    ASSERT_THROW(Purchase(IBM, 0), ShareCountCannotBeZeroException);
 }
 
 TEST_F(APortfolio, AnswersShareCountForAppropriateSymbol)
