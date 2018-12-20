@@ -23,12 +23,8 @@ std::string PlaceDescriptionService::summaryDescription(const std::string &respo
 }
 
 std::string PlaceDescriptionService::get(const string& requestedURL) const {
+    http_->initialize();
     return http_->get(requestedURL);
-}
-
-std::string PlaceDescriptionService::summaryDescription(const Address &address) const {
-    return address.road + ", " + address.city + ", " +
-           address.state + ", " + address.country;
 }
 
 std::string

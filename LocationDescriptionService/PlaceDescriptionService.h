@@ -11,7 +11,6 @@ class PlaceDescriptionService
 private:
     std::string createGetRequestUrl(
             const std::string& latitude, const std::string& longitude) const;
-    std::string summaryDescription(const Address& address) const;
 
     std::string get(const std::string& requestedURL) const;
     std::string summaryDescription(const std::string& response) const;
